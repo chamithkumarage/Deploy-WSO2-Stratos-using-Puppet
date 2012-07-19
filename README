@@ -1,0 +1,85 @@
+#
+# Deploy WSO2 Stratos using Puppet
+#
+# Chamith Kumarage <chamith@wso2.com> 
+#
+
+To have a working Stratos deployment with Puppet, you need to prepare your environment prior to the deployment. 
+Even though you can automate that with Puppet, for this deployment you’ll need to do the following to setup the environment.
+
+1. Install and configure Puppet agent on target hosts
+2. Install Java and set JAVA_HOME to /opt/java and set PATH accordingly.
+
+	# cd /opt
+	# ./jdk-XXX-linux-x64.bin
+	# ln -s /opt/jdkX.X.X /opt/java
+	# export JAVA_HOME=/opt/java
+	# export PATH=$PATH:$JAVA_HOME/bin
+
+3. Host downloaded Stratos packs and their MD5 hashes from the Oxygentank and make those available to the deployment through HTTP.
+
+Setting up the DB server
+=========================
+
+Install MySQL server, copy the provided db_setup.zip and modify db_init.sh accordingly. 
+Run db_init.sh against the DB server. Make sure that the DB server is configured to accept remote connections.
+
+Setting up the Puppet Master node
+==================================
+
+It’s easier for you have a separate environment for WSO2 Stratos if you already have a Puppet setup. 
+Otherwise you can simply point manifestdir, modulepath and templatedir directory parameters to the provided directories accordingly.
+
+Before you deploy
+==================
+
+Open manifests/nodes.pp and change parameters in the confignode section to match with your deployment. 
+The provided nodes.pp is designed to run the deployment on 2 nodes (StratosnodeA and StratosnodeB) with 2 Load Balancers 
+at each node fronting services running on that node. If you need to expand the deployment you can do so by modifying the nodes.pp accordingly.
+
+Also the services are not in the maintenance mode in the provided nodes.pp. That needs to be in that state as you’ll be deploying 
+WSO2 Stratos for the first time. Once deployed, you can set the maintenance_mode to true so that in the next maintenance cycle, 
+it’ll just look for new patches and configuration updates.
+
+
+	class { "stratos_as":
+            	offset => 1,
+               	tribes_port => 4100,
+            	config_db => "appserver_config",
+               	maintenance_mode => "true",
+               	stage => "deploy",
+ 	}
+
+Also you need to set the server_ip with the IP address of the target host. 
+This requires to add some local hosts entries and find the target path of the deployment.
+
+ 	$server_ip = "192.168.4.111"
+
+
+Change the load balancer parameters to front necessary services according to your deployment.
+
+	class {"stratos_lb":
+               	fronted_services  => ["appserver","identity","process","monitor","rule"],
+               	stage => "deploy",
+               	maintenance_mode => "true",
+       	}
+
+Change templates/hosts.erb accordingly so that service nodes don’t have to depend on any name-servers.
+
+Change the $packs_repo to the repository you setup early with downloaded packs.
+
+Now you can login to each target node and run puppetd -vt.
+
+Maintaining the setup
+======================
+
+Once the deployment is done, there will be 2 scripts in /root/bin as puppet_clean.sh and puppet_init.sh in each node. 
+You can run the puppet_clean.sh to clean the deployment in that particular node and using puppet_init.sh you can trigger the deployment. 
+If you just run puppet_init.sh without any arguments, it’ll re-run the whole deployment for that node. 
+Otherwise it’ll just invoke manifests related to the specified service without touching other running services in the node.
+
+Syntax of the puppet_init.sh
+
+puppet_init.sh <puppet_class_name | puppet_tag>
+
+Enjoy!
