@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2005-2012, WSO2 Inc. (http://www.wso2.org) 
+# All Rights Reserved.
+#
+
 class stratos_lb ( $fronted_services, $maintenance_mode=true ) inherits system_config {
 	$service_code = "lb"
 	$service_dir = "wso2$service_code-$lb_version"

@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2005-2012, WSO2 Inc. (http://www.wso2.org) 
+# All Rights Reserved.
+#
+
 class system_config {
 
 	file { "/opt/bin":

@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2005-2012, WSO2 Inc. (http://www.wso2.org) 
+# All Rights Reserved.
+#
+
 class stratos_bps ( $offset=0, $tribes_port=4000, $config_db=governance, $maintenance_mode=true ) inherits system_config {
 	
 	$service_code = "bps"

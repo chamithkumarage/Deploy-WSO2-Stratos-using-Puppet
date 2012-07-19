@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2005-2012, WSO2 Inc. (http://www.wso2.org) 
+# All Rights Reserved.
+#
+
 stage { 'configure': require => Stage['main'] }
 stage { 'deploy': require => Stage['configure'] }
 
@@ -8,7 +13,7 @@ node basenode {
 
 node confignode inherits basenode  {
 	
-	$packs_repo = "http://puppetmaster.private.wso2.com/slive/packs/1.5.2_fresh/"
+	$packs_repo = "http://stratos_repo.your_domain.com/packs/1.5.2/"
 
 	$stratos_domain = "stratos.your_domain.com"
 	$as_subdomain = "appserver"
