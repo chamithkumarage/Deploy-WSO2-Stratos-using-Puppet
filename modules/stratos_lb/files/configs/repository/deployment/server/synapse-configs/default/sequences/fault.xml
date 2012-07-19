@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~  Copyright (c) 2005-2010, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<sequence xmlns="http://ws.apache.org/ns/synapse" name="fault">
+
+    <switch source="get-property('ERROR_CODE')">
+        <case regex="10150[45]">
+            <!-- Connection timeout and connection close errors -->
+            <property name="HTTP_SC" value="504" scope="axis2"/>
+        </case>
+        <case regex="303001">
+            <!-- Endpoint not ready -->
+            <property name="HTTP_SC" value="503" scope="axis2"/>
+        </case>
+        <default>
+            <!-- All other backend errors -->
+            <property name="HTTP_SC" value="502" scope="axis2"/>
+        </default>
+    </switch>
+
+    <script language="js"><![CDATA[
+        mc.setPayloadXML(
+           <GatewayResponse xmlns="org.wso2.gateway">
+              <Timestamp>{new Date()}</Timestamp>
+              <Ack>Failure</Ack>
+              <Errors>
+                 <ShortMessage>Gateway Error</ShortMessage>
+                 <LongMessage>{mc.getProperty("ERROR_MESSAGE")}</LongMessage>
+                 <ErrorCode>500</ErrorCode>
+                 <SeverityCode>Error</SeverityCode>
+                 <ErrorClassification>RequestError</ErrorClassification>
+              </Errors>
+              <ResponseCode>{mc.getProperty("ERROR_CODE")}</ResponseCode>
+              <Version>1.5.1</Version>
+           </GatewayResponse>
+        );
+        ]]></script>
+
+    <property name="messageType" value="application/xml" scope="axis2"/>
+    <property name="ContentType" value="application/xml" scope="axis2"/>
+    <property name="NO_ENTITY_BODY" scope="axis2" action="remove"/>
+    <property name="RESPONSE" value="true"/>
+    <header name="To" action="remove"/>
+    <send/>
+
+</sequence>
+

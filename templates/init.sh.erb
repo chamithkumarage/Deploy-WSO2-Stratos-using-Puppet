@@ -1,0 +1,118 @@
+#!/bin/bash
+
+export JAVA_HOME=/opt/java
+export PATH=$PATH:$JAVA_HOME/bin/
+
+OPTS=$@
+IFACE=eth0
+STORE=/mnt/packs
+LOG=/var/log/stratos_init.log
+SERVICES="as bam bps brs cep dss esb gs ms mb governance lb"
+URL="<%= packs_repo %>"
+VERSION="<%= stratos_version %>"
+
+MKDIR=`which mkdir`
+UNZIP=`which unzip`
+TOUCH=`which touch`
+WGET=`which wget`
+FIND=`which find`
+SLEEP=`which sleep`
+TEST=`which test`
+RM=`which rm`
+CHMOD=`which chmod`
+
+err_log() {
+	local DATE=`date +%Y%m%d-%H%M`
+	echo "${DATE} - ${1}" >> ${LOG}
+}
+
+getmyip() {
+	local INETFACES=`ifconfig -a | grep -o -e "[a-z][a-z]*[0-9]*[ ]*Link" | perl -pe "s|^([a-z]*[0-9]*)[ ]*Link|\1|"`
+
+	for INETFACE in $INETFACES
+	do
+        	local INETADDR=`ifconfig $INETFACE | grep -o -e "inet addr:[^ ]*" | grep -o -e "[^:]*$"`
+        	local PUBIP=`wget -q -O - checkip.dyndns.org | sed -e 's/[^:]*: //' -e 's/<.*$//'`
+
+        	[ -z $INETADDR ] && continue || true
+        	[ $INETFACE == "lo" ] && continue || true
+
+        	if [ ${INETADDR} == ${PUBIP} ]; then
+                	echo "${PUBIP}"
+                	exit 0
+        	else
+                	echo "${INETADDR}"
+        	fi
+	done
+}
+
+check_md5() {
+        if [ -f $1.md5 ]; then
+                # Match md5 hash
+                local HASH=`${MD5SUM} $1 | ${AWK} {'print $1'}`
+                local ORIGINAL_HASH=`cat $1.md5 | ${AWK} {'print $1'}`
+
+                if [ ${HASH} == ${ORIGINAL_HASH} ]; then
+                        echo "true"
+                else
+                        echo "false"
+			${RM} $1.md5
+                fi
+        else
+                # Otherwise always download the file
+                echo "false"
+        fi
+
+}
+
+# Validating inputs and other requirements
+# Must have atleast one argument
+[ $# -lt 1 ] && (echo -e "Error: Insuffitient number of arguments\n$0 as|bam|bps|brs|cep|dss|esb|gs|ms|mb|governance|lb")
+
+# Store directory
+[ -d ${STORE} ] && true || (err_log "Could not find ${STORE} .. Creating it for you." ; ${MKDIR} ${STORE})
+
+# Service names
+for S in ${SERVICES}; do for D in $OPTS; do [ ${S} == ${D} ] && true || (err_log "${D} is not a proper servive name" ; break) ; done ; done
+
+# Log file
+[ -f ${LOG} ] && true || (${TOUCH} ${LOG})
+
+# Directory structure for the deployment if not exist
+#INETADDR=$(getmyip)
+INETADDR=<%= server_ip %>
+[ -d /mnt/${INETADDR} ] && (err_log "Directory structure already exists!" ; exit 0) || (err_log "Could not find /mnt/${INETADDR} .. Creating it for you." ; ${MKDIR} -p /mnt/${INETADDR}/)
+
+# Download packs
+for D in ${OPTS}
+do
+	if [ ${D} == "lb" ]; then
+		VERSION=<%= lb_version %>
+		HASH_STATUS=$(check_md5 ${STORE}/wso2${D}-${VERSION}.zip)
+
+        	if [ ! -f ${STORE}/wso2${D}-${VERSION}.zip ] || [ ${HASH_STATUS} == "false" ] ; then
+			${WGET} -O ${STORE}/wso2${D}-${VERSION}.zip ${URL}/wso2${D}-${VERSION}.zip ; 
+			${WGET} -O ${STORE}/wso2${D}-${VERSION}.zip.md5 ${URL}/wso2${D}-${VERSION}.zip.md5
+		fi
+
+	else
+
+		HASH_STATUS=$(check_md5 ${STORE}/wso2stratos-${D}-${VERSION}.zip)
+
+        	if [ ! -f ${STORE}/wso2stratos-${D}-${VERSION}.zip ] || [ ${HASH_STATUS} == "false" ] ; then
+			${WGET} -O ${STORE}/wso2stratos-${D}-${VERSION}.zip ${URL}/wso2stratos-${D}-${VERSION}.zip ; 
+			${WGET} -O ${STORE}/wso2stratos-${D}-${VERSION}.zip.md5 ${URL}/wso2stratos-${D}-${VERSION}.zip.md5
+		fi
+	fi
+done
+
+# Wait till wget to commit downloaded content to the output file
+${SLEEP} 10
+
+## Find and extracting Stratos services to /mnt/${INETADDR}/
+
+${FIND} ${STORE} -iname "*.zip" -exec ${UNZIP} -d /mnt/${INETADDR}/ {} \;
+
+# chmod to 755
+${CHMOD} -R 755 /mnt/${INETADDR}/*
+

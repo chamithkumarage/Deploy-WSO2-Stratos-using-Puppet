@@ -1,0 +1,24 @@
+127.0.0.1	localhost
+
+192.168.4.250   puppetmaster.your_domain.com
+192.168.4.111   stratosnodeA
+192.168.4.112   stratosnodeB
+
+<%= server_ip %>	local.<%= stratos_domain %>
+192.168.4.111	appserver.<%= stratos_domain %>
+192.168.4.111	identity.<%= stratos_domain %>
+192.168.4.111	monitor.<%= stratos_domain %>
+192.168.4.111	rule.<%= stratos_domain %>
+192.168.4.111	esb.<%= stratos_domain %>
+192.168.4.111	process.<%= stratos_domain %>
+
+192.168.4.112	<%= stratos_domain %>
+192.168.4.112	cep.<%= stratos_domain %>
+192.168.4.112	messaging.<%= stratos_domain %>
+192.168.4.112	gadget.<%= stratos_domain %>
+192.168.4.112	mashup.<%= stratos_domain %>
+192.168.4.112	governance.<%= stratos_domain %>
+192.168.4.112	data.<%= stratos_domain %>
+
+192.168.4.110   <%= mysql_server_1 %>
+192.168.4.110   <%= mysql_server_2 %>

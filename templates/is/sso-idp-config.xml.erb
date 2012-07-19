@@ -1,0 +1,89 @@
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<SSOIdentityProviderConfig>
+	<LoginPageBannerBaseURL>http://wso2.com/product-ads/stratos/wso2cloud/</LoginPageBannerBaseURL>
+    <TenantRegistrationPage>https://<%= stratos_domain %>/carbon/tenant-register/select_domain.jsp</TenantRegistrationPage>
+    <ServiceProviders>
+        <ServiceProvider>
+            <Issuer>WSO2 Stratos Identity</Issuer>
+            <AssertionConsumerService>https://<%= is_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-is/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+        <ServiceProvider>
+            <Issuer>WSO2 Stratos Governance</Issuer>
+            <AssertionConsumerService>https://<%= governance_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-gov/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Manager</Issuer>
+            <AssertionConsumerService>https://<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-sso/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Mashup Server</Issuer>
+            <AssertionConsumerService>https://<%= ms_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-ms/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Gadget Server</Issuer>
+            <AssertionConsumerService>https://<%= gs_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-gs/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Application Server</Issuer>
+            <AssertionConsumerService>https://<%= as_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-as/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Business Activity Monitor</Issuer>
+            <AssertionConsumerService>https://<%= bam_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-bam/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Business Rules Server</Issuer>
+            <AssertionConsumerService>https://<%= brs_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-brs/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Enterprise Service Bus</Issuer>
+            <AssertionConsumerService>https://<%= esb_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-esb/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Data Services Server</Issuer>
+            <AssertionConsumerService>https://<%= dss_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-dss/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Complex Event Processing Server</Issuer>
+            <AssertionConsumerService>https://<%= cep_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-cep/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Message Broker</Issuer>
+            <AssertionConsumerService>https://<%= mb_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-mb/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    	<ServiceProvider>
+            <Issuer>WSO2 Stratos Business Process Server</Issuer>
+            <AssertionConsumerService>https://<%= bps_subdomain %>.<%= stratos_domain %>/acs</AssertionConsumerService>
+			<CustomLoginPage>stratos-bps/login_ajaxprocessor.jsp</CustomLoginPage>
+        </ServiceProvider>
+    </ServiceProviders>
+</SSOIdentityProviderConfig>
+

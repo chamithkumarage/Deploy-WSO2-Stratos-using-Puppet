@@ -1,0 +1,72 @@
+<tenantRegListenerServers>
+    <server>
+        <!-- governance -->
+        <serverUrl>https://governance.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+    <server>
+        <!-- identity -->
+        <serverUrl>https://identity.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+    <server>
+        <!-- gadget -->
+        <serverUrl>https://gadget.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+    <server>
+        <!-- app server -->
+        <serverUrl>https://appserver.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<server>
+        <!-- mashup server -->
+        <serverUrl>https://mashup.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<!-- bam -->
+	<server>
+        <serverUrl>https://monitor.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<!-- brs -->
+	<server>
+        <serverUrl>https://rule.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+	</server>
+	<!-- esb -->
+	<server>
+        <serverUrl>https://esb.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<!-- dss -->
+	<server>
+        <serverUrl>https://data.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<!-- bps -->
+	<server>
+        <serverUrl>https://process.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<server>
+        <serverUrl>https://cep.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+	<server>
+        <serverUrl>https://messaging.STRATOS_DOMAIN_NAME/services/</serverUrl>
+		<userName>admin</userName>
+		<password>admin</password>        
+    </server>
+</tenantRegListenerServers>

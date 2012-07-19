@@ -1,0 +1,48 @@
+synapse.datasources=stratos_ds,bam_datasource
+synapse.datasources.providerPort=2200
+synapse.datasources.icFactory=com.sun.jndi.rmi.registry.RegistryContextFactory
+
+#MySql datasource configuration
+synapse.datasources.stratos_ds.registry=JNDI
+synapse.datasources.stratos_ds.type=BasicDataSource
+synapse.datasources.stratos_ds.driverClassName=com.mysql.jdbc.Driver
+synapse.datasources.stratos_ds.url=jdbc:mysql://<%= mysql_server_1 %>:<%= mysql_port %>/<%= billing_database %>?autoReconnect=true
+synapse.datasources.stratos_ds.username=<%= billing_database %>
+synapse.datasources.stratos_ds.password=<%= billing_password %>
+synapse.datasources.stratos_ds.dsName=stratos_ds
+synapse.datasources.stratos_ds.maxActive=<%= max_active %>
+synapse.datasources.stratos_ds.minIdle=5
+synapse.datasources.stratos_ds.maxWait=<%= max_wait %>
+synapse.datasources.stratos_ds.autoCommit=false
+synapse.datasources.stratos_ds.validationQuery=SELECT 1
+
+synapse.datasources.bam_datasource.registry=JNDI
+synapse.datasources.bam_datasource.type=BasicDataSource
+synapse.datasources.bam_datasource.driverClassName=com.mysql.jdbc.Driver
+synapse.datasources.bam_datasource.url=jdbc:mysql://<%= mysql_server_1 %>:<%= mysql_port %>/<%= billing_database %>?autoReconnect=true
+synapse.datasources.bam_datasource.username=<%= billing_database %>
+synapse.datasources.bam_datasource.password=<%= billing_password %>
+synapse.datasources.bam_datasource.dsName=bam_datasource
+synapse.datasources.bam_datasource.maxActive=<%= max_active %>
+synapse.datasources.bam_datasource.minIdle=5
+synapse.datasources.bam_datasource.maxWait=<%= max_wait %>
+synapse.datasources.bam_datasource.autoCommit=false
+synapse.datasources.bam_datasource.validationQuery=SELECT 1
+
+# H2 database configuration
+#synapse.datasources.stratos_ds.registry=JNDI
+#synapse.datasources.stratos_ds.type=BasicDataSource
+#synapse.datasources.stratos_ds.driverClassName=org.h2.Driver
+#synapse.datasources.stratos_ds.url=jdbc:h2:repository/database/WSO2CARBON_DB
+#synapse.datasources.stratos_ds.username=wso2carbon
+#synapse.datasources.stratos_ds.password=wso2carbon
+#synapse.datasources.stratos_ds.dsName=stratos_ds
+#
+#synapse.datasources.bam_datasource.registry=JNDI
+#synapse.datasources.bam_datasource.type=BasicDataSource
+#synapse.datasources.bam_datasource.driverClassName=org.h2.Driver
+#synapse.datasources.bam_datasource.url=jdbc:h2:repository/database/WSO2BAM_DB
+#synapse.datasources.bam_datasource.username=wso2bam
+#synapse.datasources.bam_datasource.password=wso2bam
+#synapse.datasources.bam_datasource.dsName=bam_datasource
+

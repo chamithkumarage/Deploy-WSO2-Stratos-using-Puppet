@@ -1,0 +1,7 @@
+10.200.1.53	puppet-master
+192.168.0.58	puppet1
+192.168.0.59	puppet2
+10.200.1.53	gonesimple
+
+192.168.0.58	appserver.stratoslive.wso2.com
+192.168.0.58	local.stratoslive.wso2.com

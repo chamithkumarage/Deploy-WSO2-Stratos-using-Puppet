@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# This will clean the entire Stratos system from the server.
+# Once run, you need to re-run the puppet_init.sh to recover
+# the setup.
+#
+
+PACKS_DIR=/mnt/packs
+STRATOS_DIR=/mnt/<%= server_ip %>
+OPT_DIR=/opt/bin
+
+RM=`which rm`
+PKILL=`which pkill`
+
+${PKILL} -9 java
+
+${RM} -rf ${PACKS_DIR}
+${RM} -rf ${STRATOS_DIR}
+${RM} -rf ${OPT_DIR}
+

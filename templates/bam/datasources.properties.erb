@@ -1,0 +1,15 @@
+synapse.datasources=bam_datasource
+synapse.datasources.providerPort=2201
+synapse.datasources.icFactory=com.sun.jndi.rmi.registry.RegistryContextFactory
+synapse.datasources.bam_datasource.registry=JNDI
+synapse.datasources.bam_datasource.type=BasicDataSource
+synapse.datasources.bam_datasource.driverClassName=com.mysql.jdbc.Driver
+synapse.datasources.bam_datasource.url=jdbc:mysql://<%= mysql_server_1 %>:<%= mysql_port %>/<%= billing_database %>?autoReconnect=true
+synapse.datasources.bam_datasource.username=<%= billing_user %>
+synapse.datasources.bam_datasource.password=<%= billing_password %>
+synapse.datasources.bam_datasource.dsName=bam_datasource
+synapse.datasources.bam_datasource.validationQuery=SELECT 1
+synapse.datasources.bam_datasource.maxActive=<%= max_active %>
+synapse.datasources.bam_datasource.maxIdle=20
+synapse.datasources.bam_datasource.maxWait=<%= max_wait %>
+
