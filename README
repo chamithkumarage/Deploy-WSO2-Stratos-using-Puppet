@@ -1,7 +1,8 @@
 #
 # Deploy WSO2 Stratos using Puppet
 #
-# Chamith Kumarage <chamith@wso2.com> 
+# Copyright (c) 2005-2012, WSO2 Inc. (http://www.wso2.org) 
+# All Rights Reserved.
 #
 
 To have a working Stratos deployment with Puppet, you need to prepare your environment prior to the deployment. 
